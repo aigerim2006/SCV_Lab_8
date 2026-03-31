@@ -1,0 +1,27 @@
+# Сборка и временные файлы (Binary output)
+[Bb]in/
+[Oo]bj/
+
+# Пользовательские настройки Visual Studio
+*.user
+*.userosscache
+*.sln.docstates
+
+# Кэш и служебные папки VS
+.vs/
+.vs*
+Debug/
+Release/
+x64/
+x86/
+
+# Файлы базы данных SQL Server (если есть)
+*.mdf
+*.ldf
+
+# Временные файлы Windows
+Thumbs.db
+desktop.ini
+
+# Логи
+*.log
