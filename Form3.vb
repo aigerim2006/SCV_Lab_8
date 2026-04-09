@@ -1,4 +1,6 @@
 ﻿Imports System.Net.Mime.MediaTypeNames
+Imports System.Windows.Forms.DataVisualization.Charting
+
 
 Public Class Form3
     Private Function f(x As Double) As Double
@@ -39,6 +41,8 @@ Public Class Form3
 
         ' 4. Расчет интеграла (самостоятельная работа)
         lblIntegral.Text = MethodTrapezoid(a, b, 1000).ToString("F5")
+
+        DrawGraph(a, b)
 
     End Sub
 
@@ -134,5 +138,66 @@ Public Class Form3
         Return sum * h
     End Function
 
+    Private Sub DrawGraph(a As Double, b As Double)
+        Dim chartArea As ChartArea = Chart1.ChartAreas(0)
+        Dim series As Series = Chart1.Series(0)
+
+        ' 1. Убираем легенду (надпись Series1)
+        If Chart1.Legends.Count > 0 Then Chart1.Legends(0).Enabled = False
+
+        ' 2. Базовый стиль
+        series.Points.Clear()
+        series.ChartType = SeriesChartType.Line
+        series.Color = Color.FromArgb(79, 129, 189)
+        series.BorderWidth = 2
+        chartArea.BackColor = Color.White
+
+        ' 3. НАСТРОЙКА ОСЕЙ "КАК В EXCEL"
+        ' Чтобы ось Y была слева, а не в центре, ставим NaN
+        chartArea.AxisY.Crossing = 0
+        ' Чтобы ось X была на уровне нуля
+        chartArea.AxisX.Crossing = 0
+
+        ' Ставим фиксированные границы, как на вашем скриншоте из Excel
+        chartArea.AxisX.Minimum = 0
+        chartArea.AxisX.Maximum = 4.5
+        chartArea.AxisX.Interval = 0.5
+
+        chartArea.AxisY.Minimum = -2
+        chartArea.AxisY.Maximum = 1
+        chartArea.AxisY.Interval = 0.5
+
+        ' 4. Сетка и засечки
+        chartArea.AxisX.MajorGrid.LineColor = Color.LightGray
+        chartArea.AxisY.MajorGrid.LineColor = Color.LightGray
+        chartArea.AxisX.MajorTickMark.TickMarkStyle = TickMarkStyle.OutsideArea
+        chartArea.AxisY.MajorTickMark.TickMarkStyle = TickMarkStyle.OutsideArea
+        chartArea.AxisY.LabelStyle.Format = "0.0"
+
+
+        chartArea.AxisX.LineWidth = 2
+        chartArea.AxisX.LineColor = Color.Black
+        chartArea.AxisY.LineWidth = 2
+        chartArea.AxisY.LineColor = Color.Black
+
+        ' 5. РИСОВАНИЕ (от 0.4 до 4.5, чтобы было как в таблице)
+        Dim startPoint As Double = 0.4
+        Dim endPoint As Double = 4.5
+        Dim steps As Integer = 300
+        Dim h As Double = (endPoint - startPoint) / steps
+
+        For i As Integer = 0 To steps
+            Dim currX As Double = startPoint + (i * h)
+
+            ' Защита от разрыва в нуле (1/x)
+            If Math.Abs(currX) > 0.001 Then
+                Dim currY As Double = f(currX)
+                ' Добавляем точку, только если она вменяемых размеров
+                If currY < 2 And currY > -3 Then
+                    series.Points.AddXY(currX, currY)
+                End If
+            End If
+        Next
+    End Sub
 
 End Class

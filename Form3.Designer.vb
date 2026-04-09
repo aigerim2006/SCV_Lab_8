@@ -22,6 +22,9 @@ Partial Class Form3
     'Не изменяйте ее в редакторе исходного кода.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.txtStart = New System.Windows.Forms.TextBox()
         Me.txtEnd = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -40,6 +43,8 @@ Partial Class Form3
         Me.txtEps = New System.Windows.Forms.TextBox()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.lblFunction = New System.Windows.Forms.Label()
+        Me.Chart1 = New System.Windows.Forms.DataVisualization.Charting.Chart()
+        CType(Me.Chart1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'txtStart
@@ -209,11 +214,29 @@ Partial Class Form3
         Me.lblFunction.Size = New System.Drawing.Size(0, 20)
         Me.lblFunction.TabIndex = 17
         '
+        'Chart1
+        '
+        ChartArea1.Name = "ChartArea1"
+        Me.Chart1.ChartAreas.Add(ChartArea1)
+        Legend1.Name = "Legend1"
+        Me.Chart1.Legends.Add(Legend1)
+        Me.Chart1.Location = New System.Drawing.Point(473, 59)
+        Me.Chart1.Name = "Chart1"
+        Series1.ChartArea = "ChartArea1"
+        Series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
+        Series1.Legend = "Legend1"
+        Series1.Name = "Series1"
+        Me.Chart1.Series.Add(Series1)
+        Me.Chart1.Size = New System.Drawing.Size(452, 330)
+        Me.Chart1.TabIndex = 18
+        Me.Chart1.Text = "Chart1"
+        '
         'Form3
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(589, 450)
+        Me.ClientSize = New System.Drawing.Size(962, 450)
+        Me.Controls.Add(Me.Chart1)
         Me.Controls.Add(Me.lblFunction)
         Me.Controls.Add(Me.Label7)
         Me.Controls.Add(Me.txtEps)
@@ -234,6 +257,7 @@ Partial Class Form3
         Me.Controls.Add(Me.txtStart)
         Me.Name = "Form3"
         Me.Text = "Form3"
+        CType(Me.Chart1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -257,4 +281,5 @@ Partial Class Form3
     Friend WithEvents txtEps As TextBox
     Friend WithEvents Label7 As Label
     Friend WithEvents lblFunction As Label
+    Friend WithEvents Chart1 As DataVisualization.Charting.Chart
 End Class
